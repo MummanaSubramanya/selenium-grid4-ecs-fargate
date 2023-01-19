@@ -3,6 +3,11 @@ Finally we have the selenium grid 4 on ECS fargate now we can run integration an
 
 I might not have followed the best practices. But this should give you an idea how to implement.
 
+# Challenges Involved in migrating from grid3 to grid4
+1) NLB has to be used in Grid 4 as nodes uses TCP communication to regsiter with Hub. Here ALB will not work as it listens to Http and Https only.
+
+2) AWS CLI isused to configure Multiple Target groups within same ECS container. From console, we can configure only one target group with in same ECS container.
+
 # Introduction
 NOTE: This Selenium Grid 4 is created using AWS CLI and Console and Idea of this implementation was inspired from project
 https://github.com/aws-samples/run-selenium-tests-at-scale-using-ecs-fargate
@@ -27,9 +32,18 @@ This method is not scalable and costs both money and time. The approach explaine
 
 2) Connect to AWS cloudshell
 
+
 3) Create a Network load balancer using the below command. we should not use Application load balancer as selenium grid 4 uses TCP communication for EVENT_BUS registration. Copy and note down loadbalancer arn
 
    - aws elbv2 create-load-balancer --name hub-alb-7 --type network --subnets subnet-1 subnet-2
+
+4) Configure Security Groups. One for Hub and one for Chrome
+
+    - Selenium Hub Security group
+    ![architecture](hub-security-group.png)
+
+    - Chrome Security Group
+    ![architecture](chrome-security-group.png)
 
 4) Create 3 target groups for hub to listen in 3 ports. Copy and note down the target groups arn
 
