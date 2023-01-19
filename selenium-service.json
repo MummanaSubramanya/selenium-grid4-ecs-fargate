@@ -1,0 +1,33 @@
+{
+    "cluster": "demo-cluster-2",
+    "serviceName": "hub-pub-sub-serivce",
+    "taskDefinition": "hub-pub-sub",
+    "loadBalancers": [
+        {
+            "targetGroupArn": "<target group 1 arn>",
+            "containerName": "hub-pub-sub",
+            "containerPort": 4444
+        },
+        {
+            "targetGroupArn": "<target group 1 arn>",
+            "containerName": "hub-pub-sub",
+            "containerPort": 4442
+        },
+        {
+            "targetGroupArn": "<target group 1 arn>",
+            "containerName": "hub-pub-sub",
+            "containerPort": 4443
+        }
+    ],
+    "launchType": "FARGATE",
+    "schedulingStrategy": "REPLICA",
+    "platformVersion": "LATEST",
+    "networkConfiguration": {
+       "awsvpcConfiguration": {
+          "assignPublicIp": "ENABLED",
+          "securityGroups": [ "<your security group>" ],
+          "subnets": [ "subnet-1", "subnet-2" ]
+       }
+    },
+    "desiredCount": 1
+}
