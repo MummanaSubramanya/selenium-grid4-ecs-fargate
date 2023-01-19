@@ -1,7 +1,7 @@
 # Run selenium tests at scale using Latest Selenium Grid 4 ECS Fargate
-Finally we have the selenium grid 4 on ECS fargate 
+Finally we have the selenium grid 4 on ECS fargate now we can run integration and regression tests quicker and cheaper to improve the CI/CD process.
 
-This article talks about an approach that can help customers run integration and regression tests quicker and cheaper to improve the CI/CD process.
+I might not have followed the best practices. But this should give you an idea how to implement.
 
 # Introduction
 NOTE: This Selenium Grid 4 is created using AWS CLI and Console and Idea of this implementation was inspired from project
@@ -51,15 +51,15 @@ Here is the high-level view of all the components
 
     Listner for port 4444
 
-    - aws elbv2 create-listener --load-balancer-arn <load balancer arn> --protocol TCP --port 4444 --default-actions Type=forward,TargetGroupArn=<target group 1 arn>
+    - aws elbv2 create-listener --load-balancer-arn \<load balancer arn\> --protocol TCP --port 4444 --default-actions Type=forward,TargetGroupArn=<target group 1 arn>
 
     Listner for port 4443
 
-    - aws elbv2 create-listener --load-balancer-arn <load balancer arn> --protocol TCP --port 4442 --default-actions Type=forward,TargetGroupArn=<target group 2 arn>
+    - aws elbv2 create-listener --load-balancer-arn \<load balancer arn\> --protocol TCP --port 4442 --default-actions Type=forward,TargetGroupArn=<target group 2 arn>
 
     Listner for port 4442
 
-    - aws elbv2 create-listener --load-balancer-arn <load balancer arn> --protocol TCP --port 4443 --default-actions Type=forward,TargetGroupArn=<target group 3 arn>
+    - aws elbv2 create-listener --load-balancer-arn \<load balancer arn\> --protocol TCP --port 4443 --default-actions Type=forward,TargetGroupArn=<target group 3 arn>
 
 5) Create Task Defination for selenium hub as per the json configuration in the ECS
 
@@ -74,7 +74,7 @@ Here is the high-level view of all the components
 9) Once all services are deployed and running. Goto your load balancer and copy the DNS 
 
 10) Open the browser, paste the URL and append with port 4444. Finally you should see the selenium and nodes configured
-    example: http://XXXXXXXXXXXX.us-east-1.amazonaws.com:4444/ui
+    - example: http://XXXXXXXXXXXX.us-east-1.amazonaws.com:4444/ui
 
 11) Execute tests on chrome:
     - ChromeOptions options = new ChromeOptions();
@@ -83,14 +83,23 @@ Here is the high-level view of all the components
 
 
 Helpful Links :
+
     https://www.selenium.dev/documentation/grid/
+
     https://github.com/SeleniumHQ/docker-selenium
+
     https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-cli.html
+
     https://docs.aws.amazon.com/AmazonECS/latest/developerguide/register-multiple-targetgroups.html
+
     https://github.com/aws-samples/run-selenium-tests-at-scale-using-ecs-fargate
+
     https://stackoverflow.com/questions/73567175/node-is-not-able-to-connect-to-hub-keep-sending-registration-event
+
     https://www.webelement.click/en/selenium_grid_4_complete_guide_to_configuration_flags
+
     https://code.mendhak.com/selenium-grid-ecs/
+
     https://github.com/taktakpeops/selenium-grid-ecs-fargate
 
 
