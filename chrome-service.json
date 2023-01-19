@@ -1,0 +1,16 @@
+{
+    "cluster": "demo-cluster-2",
+    "serviceName": "chrome-serivce",
+    "taskDefinition": "selenium-chrome-node",
+    "launchType": "FARGATE",
+    "schedulingStrategy": "REPLICA",
+    "platformVersion": "LATEST",
+    "networkConfiguration": {
+       "awsvpcConfiguration": {
+          "assignPublicIp": "ENABLED",
+          "securityGroups": [ "<your security group>" ],
+          "subnets": [ "subnet-1", "subnet-2" ]
+       }
+    },
+    "desiredCount": 1
+}

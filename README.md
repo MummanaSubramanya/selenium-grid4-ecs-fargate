@@ -17,11 +17,9 @@ This method is not scalable and costs both money and time. The approach explaine
 > Note: The approach highlighted here is only applicable for testcases executed using selenium framework
 
 
-# Architecture
+# Testcase Flow
 
-Here is the high-level view of all the components
-
-![architecture](images/arch.svg)
+![architecture](sequence.svg)
 
 # Steps to Create the Infrastructure
 
@@ -63,18 +61,24 @@ Here is the high-level view of all the components
 
 5) Create Task Defination for selenium hub as per the json configuration in the ECS
 
-6) Create Task defination for node chrome as per the json configuration in the ECS
+![architecture](selenium-hub-task.png)
 
-7) Upload the selenium-service.json file to the cloudshell and execute the below command 
+6) Create Task defination for node chrome as per the json configuration in the ECS. Replace the SE_EVENT_BUS_HOST value with your NLB dns
+
+![architecture](node-chrome-task.png)
+
+7) Update the details and Upload the selenium-service.json file to the cloudshell and execute the below command.
     - aws ecs create-service --cli-input-json file://selenium-service.json --region us-east-1
 
-8) Upload the node-chrome-service.json file to the cloudshell and execute the below command 
+8) Update the details and Upload the node-chrome-service.json file to the cloudshell and execute the below command 
     - aws ecs create-service --cli-input-json file://chrome-service.json --region us-east-1
 
 9) Once all services are deployed and running. Goto your load balancer and copy the DNS 
 
 10) Open the browser, paste the URL and append with port 4444. Finally you should see the selenium and nodes configured
     - example: http://XXXXXXXXXXXX.us-east-1.amazonaws.com:4444/ui
+
+![architecture](seleniumhub.png)
 
 11) Execute tests on chrome:
     - ChromeOptions options = new ChromeOptions();
